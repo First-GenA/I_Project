@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<!--
+	Load static files
+-->
+{% load static %}
+<html>
+	<head>
+		<title>Finances</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+		<link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
+	</head>
+
+    <body class="is-preload">
+        <!--header-->
+        <header id="header">
+            <a href="{% url 'index' %}" class="title">Finances</a>
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'index' %}">Home</a></li>
+                        <li><a href="{% url 'finances' %}">Finance</a></li>
+                        <li><a href="{% url 'depo' %}">Withdrawal/Deposit</a></li>
+                    </ul>
+                </nav>
+        </header>
+        
+        <div id="wrapper">
+            <div class="inner">
+                <form action="#" method="POST">
+                    {% csrf_token %}
+                    <div class="fields">
+                        <div class="field half">
+                            <label for="bank" required>Bank name</label>
+                            <input type="text" name="bank" required/>
+                        </div>
+                        
+                        <div class="field half">
+                            <label for="amount" required>Initial deposit</label>
+                            <input type="number" name="amount" style="color: #0A0A0A;" required/>
+                        </div>
+                    </div>
+                    <ul class="actions">
+                        <li><input class="button submit" value="Finalize"></li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+        <!--Footer-->
+        <footer id="footer" class="wrapper style1-alt">
+            <div class="inner">
+                <ul class="menu">
+                    <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="#">Andrew</a></li>
+                </ul>
+            </div>
+        </footer>
+        <!--Scripts-->
+        <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'assets/js/browser.min.js' %}"></script>
+		<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+		<script src="{% static 'assets/js/util.js' %}"></script>
+		<script src="{% static 'assets/js/main.js' %}"></script>
+    </body>
+
+</html>
