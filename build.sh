@@ -13,5 +13,3 @@ python manage.py collectstatic --no-input
 # apply migrations
 python manage.py migrate
 
-# return to main dir
-cd ..
