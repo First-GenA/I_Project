@@ -11,7 +11,9 @@ services:
     startCommand: "python -m gunicorn personalWeb.asgi:application -k uvicorn.Workers.UvicornWorker"
     envVars:
       - key: DATABASE_URL
-        value: postgresql://postgres:fairygodmother@db:5432/postgres
+        fromDatabase:
+          name: financedb
+          property: connectionString
       - key: SECRET_KEY
         generatrValue: true
       - key: WEB_CONCURRENcy
