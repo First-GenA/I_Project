@@ -1,5 +1,5 @@
 databases:
-  - name: postgres
+  - name: financedb
     plan: free
     databaseName: postgres
     user: postgres
