@@ -11,7 +11,6 @@ services:
     startCommand: "python -m gunicorn personalWeb.asgi:application -k uvicorn.Workers.UvicornWorker"
     envVars:
       - key: DATABASE_URL
-        value: postgresql://postgres:fairygodmother@localhost:543i1/postgres
         fromDatabase:
           name: financedb
           property: connectionString
