@@ -1,7 +1,6 @@
 databases:
   - name: financedb
     plan: free
-    type: postgres
 
 services:
   - type: web
