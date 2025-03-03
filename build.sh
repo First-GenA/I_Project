@@ -12,4 +12,4 @@ cd personalWeb
 python manage.py collectstatic --no-input
 # apply migrations
 python manage.py migrate
-cd ..
+
