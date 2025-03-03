@@ -5,7 +5,7 @@ databases:
 services:
   - type: web
     plan: free
-    name: personalWeb
+    name: personal
     runtime: python
     buildCommand: "./build.sh"
     startCommand: "python -m gunicorn personalWeb.asgi:application -k uvicorn.Workers.UvicornWorker"
