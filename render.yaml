@@ -21,6 +21,5 @@ services:
 
 databases:
   - name: financedb
-    type: postgres
     plan: free
     ipAllowList: []
