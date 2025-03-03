@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -82,15 +83,11 @@ WSGI_APPLICATION = 'personalWeb.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.{}'.format(
-             os.getenv('DATABASE_ENGINE', 'sqlite3')
-         ),
-         'NAME': os.getenv('DATABASE_NAME', 'postgres'),
-         'USER': os.getenv('DATABASE_USERNAME', 'postgres'),
-         'PASSWORD': os.getenv('DATABASE_PASSWORD', 'fairygodmother'),
-         'PORT': os.getenv('DATABASE_PORT', 5432),
-     }
+     'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgresql://postgres:fairygodmother@localhost:5432/postgres',
+        conn_max_age=600
+    )
  }
 
 # Session cookie settings
