@@ -12,7 +12,7 @@ services:
     envVars:
       - key: postgresql://postgres:fairygodmother@localhost:5432/postgres
         fromDatabase:
-          name: postgres
+          name: financedb
           property: connectionString
       - key: SECRET_KEY
         generatrValue: true
