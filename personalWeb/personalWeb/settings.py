@@ -12,23 +12,22 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
-import environ
-import dj_database_url
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-env = environ.Env()
-environ.Env.read_env(env_file=str(BASE_DIR) + '/.env')
+# load environment variables
+load_dotenv()
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret! django-insecure-mazb!=#cz6_8ce^-32rxpej7g8poc^i5%9(hjiwadxrp60qz5^
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG", default=0))
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1').split(',')# change this!!!!
 
@@ -43,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # installed apps
     'personal',
-    'environ',
 ]
 
 MIDDLEWARE = [
@@ -91,7 +89,6 @@ DATABASES = {
          'NAME': os.getenv('DATABASE_NAME', 'postgres'),
          'USER': os.getenv('DATABASE_USERNAME', 'postgres'),
          'PASSWORD': os.getenv('DATABASE_PASSWORD', 'fairygodmother'),
-         'HOST': os.getenv('DATABASE_HOST', '127.0.0.1'),
          'PORT': os.getenv('DATABASE_PORT', 5432),
      }
  }
