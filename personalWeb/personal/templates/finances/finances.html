@@ -47,13 +47,12 @@
 						<div class="split style1">
 							<section>
 								<div class="fields">
-									<h4><u>User Information</u></h4>
+									<h2><u>User Information</u></h2>
 									<div class="field half">
 										<span>
 											<h7>Email: {{ user.email }}</h7><br>
-											<h4><u>Bank Name(s)</u></h4>
 											{% for item in balance %}
-												::{{ item.b_name }}::<h6>Balance::</h6>{{ item.b_balance }}<br>
+												<h7>{{ item.b_name }} => Ksh {{ item.b_balance|floatformat:2 }}</h7><br/>
 											{% endfor %}
 										</span>
 									</div>
@@ -61,17 +60,17 @@
 							</section>
 
 							<section>
-								<h4>Transaction Information</h4>
 								<div class="fields">
+									<h3><u>Transaction Information</u></h3>
 									<div class="field half">
 										<span>
 											{% if finances %}
-												{% for finance in finances %}
-													<h7>transaction type: {{ finance.t_type }}</h7>
-													<h7>transaction bank: {{ finance.t_bank }}</h7>
-													<h7>transaction amount: {{ finance.t_amount }}</h7>
-													<h7>transaction time: {{ finance.t_creation }}</h7>
-													<h3>----------------------------------------------------</h3><br>
+												{% for finance in finances|slice:":5" %}
+													<h7><!--transaction type: -->{{ finance.t_type }},</h7>
+													<h7><!--transaction bank: -->{{ finance.t_bank }},</h7>
+													<h7><!--transaction amount: -->{{ finance.t_amount|floatformat:2 }},</h7>
+													<h7><!--transaction time: -->{{ finance.t_creation }}</h7>
+													<h3>--------------------------------------------------</h3><br>
 												{% endfor %}
 											{% else %}
 												<h7>No data to display</h7>

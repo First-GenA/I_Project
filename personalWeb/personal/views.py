@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import BankInfo, Transactions, UserInfo
 from .forms import Profile
-import matplotlib.pyplot as plt
 
 # Create your views here.
 def home(request):
@@ -117,6 +116,8 @@ class UserInformation:
                 return redirect('/login')
             except Exception as e:
                 print(f'Verification error:-> {e}')
+                messages.error(request, 'Username already exists')
+                return redirect('/registration')
         else:
             return render(request, 'registration.html')
     
@@ -133,16 +134,23 @@ class UserInformation:
                 form = Profile(request.POST, request.FILES, instance=user_info)
                 if form.is_valid():
                     form.save()
+                    try:
+                        name = form['u_name'].value()  # get form username
+                        User.objects.filter(id=request.user.id).update(username=name)  # update username in user data table
+                    except Exception as e:
+                        print(f'Username update error:=> {e}')
+
                     messages.success(request, 'Profile updated successfully')
                     return redirect('/profile')
                 else:
-                    messages.error(request, 'Error')
+                    messages.error(request, 'Form submission Error')
                     # reload the form
                     return redirect('/profile')
             else:
                 # display the available user details
                 form = Profile(instance=user_info)
-                return render(request, 'profile.html', {'form': form})
+                image = UserInfo.objects.get(user=user)
+                return render(request, 'profile.html', {'form': form, 'image': image})
         else:
             messages.error(request, 'You are not logged in')
             return redirect('/login')
@@ -169,10 +177,10 @@ class Finance:
                 # get current user
                 user = User.objects.get(id=request.user.id)
                 userinfo = UserInfo.objects.get(user=user)
-                # get user bank balance( manually passed bank name for testing )
+                # get user bank information
                 bankbal = BankInfo.objects.values().filter(b_user=user)
-                # get all transactions by the user
-                transactioninfo = Transactions.objects.all().filter(t_owner=userinfo)
+                # get all transactions by the user ordered from the latest
+                transactioninfo = Transactions.objects.all().filter(t_owner=userinfo).order_by('-t_creation')
             except Exception as e:
                 print(f'Banking detail error:-> {e}')
             
@@ -196,13 +204,16 @@ class Finance:
             print(f'user: {user}\n bankinfo: {bankinfo}\n userinfo: {userinfo}\n')
             # update the bank balance
             try:
-                amount = float(amount) + bankinfo.b_balance
-                print(f'Amount:= {amount}')
-                BankInfo.objects.filter(b_user=user, b_name=bank).update(b_balance=amount)
-                print(f'bank updated')
-                Transactions.objects.update_or_create(t_amount=transactionamount, t_type='deposit', t_bank=bankinfo, t_owner=userinfo)
-                print(f'Transactions updated')
-                messages.success(request, 'deposit has been made')
+                if float(amount) >= 0:
+                    amount = float(amount) + bankinfo.b_balance
+                    print(f'Amount:= {amount}')
+                    BankInfo.objects.filter(b_user=user, b_name=bank).update(b_balance=amount)
+                    print(f'bank updated')
+                    Transactions.objects.update_or_create(t_amount=transactionamount, t_type='deposit', t_bank=bankinfo, t_owner=userinfo)
+                    print(f'Transactions updated')
+                    messages.success(request, 'deposit has been made')
+                else:
+                    messages.error(request, 'Your deposit amount is below the minimum amount.(0)')
             except Exception as e:
                 print(f'Banking error:= {e}')
                 # messages.error(request, 'Deposit denied. Check your banking information.')
@@ -223,13 +234,16 @@ class Finance:
             print(f'user: {user}\n bankinfo: {bankinfo}\n userinfo: {userinfo}\n')
             # update the bank balance
             try:
-                amount = bankinfo.b_balance - float(amount)
-                print(f'Amount:= {amount}')
-                BankInfo.objects.filter(b_user=user, b_name=bank).update(b_balance=amount)
-                print(f'bank updated')
-                Transactions.objects.update_or_create(t_amount=transactionamount, t_type='withdrawal', t_bank=bankinfo, t_owner=userinfo)
-                print(f'Transactions updated')
-                messages.success(request, 'withdrawal has been made')
+                if bankinfo.b_balance >= 0 and float(amount) <= bankinfo.b_balance:
+                    amount = bankinfo.b_balance - float(amount)
+                    print(f'Amount:= {amount}')
+                    BankInfo.objects.filter(b_user=user, b_name=bank).update(b_balance=amount)
+                    print(f'bank updated')
+                    Transactions.objects.update_or_create(t_amount=transactionamount, t_type='withdrawal', t_bank=bankinfo, t_owner=userinfo)
+                    print(f'Transactions updated')
+                    messages.success(request, 'withdrawal has been made')
+                else:
+                    messages.error(request, 'Your bank balance is below the requested amount.')
             except Exception as e:
                 print(f'Bank update error')
                 # messages.error(request, 'Withdrawal denied. Check your banking information.')
