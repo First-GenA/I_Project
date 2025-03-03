@@ -2,7 +2,7 @@ services:
   - type: web
     plan: free
     name: personal
-    runtime: python3
+    runtime: python
     buildCommand: "./build.sh"
     startCommand: "python -m gunicorn personalWeb.personalWeb.asgi:application -k uvicorn.workers.UvicornWorker"
     envVars:
