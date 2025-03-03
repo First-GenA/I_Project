@@ -10,7 +10,8 @@ services:
     buildCommand: "./build.sh"
     startCommand: "python -m gunicorn personalWeb.asgi:application -k uvicorn.Workers.UvicornWorker"
     envVars:
-      - key: postgresql://postgres:fairygodmother@localhost:5432/postgres
+      - key: DATABASE_URL
+        value: postgresql://postgres:fairygodmother@localhost:543i1/postgres
         fromDatabase:
           name: financedb
           property: connectionString
