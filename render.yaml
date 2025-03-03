@@ -1,7 +1,6 @@
 databases:
   - name: financedb
     plan: free
-    databaseName: postgres
     user: postgres
 
 services:
