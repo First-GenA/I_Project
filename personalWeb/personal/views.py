@@ -2,16 +2,37 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 from .models import BankInfo, Transactions, UserInfo
 from .forms import Profile
 
 # Create your views here.
-def home(request):
-    '''
-    This is the default home function.
-    Leads to the home/index page
-    '''
-    return render(request, 'index.html')
+class Default:
+    def home(request):
+        '''
+        This is the default home function.
+        Leads to the home/index page
+        '''
+        context = {}
+        if request.method == 'POST':
+            address = request.POST.get('email')
+            subject = request.POST.get('name')
+            message = request.POST.get('message')
+            print(f'address:=>{address} subject:=>{subject} message:=>{message}')
+            # validate user input
+            if address and subject and message:
+                try:
+                    # send_mail(subject, message, settings.EMAIL_HOST_USER, [address])
+                    send_mail(subject, message, address, [settings.EMAIL_HOST_USER]) # note: django uses the set email backend as user does not give auth details
+                    context['result'] = 'Email sent successfully'
+                except Exception as e:
+                    context['result'] = f'Error sending email:=> {e}'
+            else:
+                context['result'] = 'All fields are required'
+
+        return render(request, 'index.html', context)
+
 
 def deposit_withdrawal(request):
     '''
@@ -55,6 +76,7 @@ def deposit_withdrawal(request):
     except Exception as e:
         print(f'Information error:-> {e}')
     return render(request, 'finances/deposit.html')
+
 
 def generic(request):
     '''

@@ -3,7 +3,7 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.home, name='index'),
+    path('', views.Default.home, name='index'),
     path('generic/', views.generic, name='generic'),
     path('elements/', views.elements, name='elements'),
     # User verification paths
