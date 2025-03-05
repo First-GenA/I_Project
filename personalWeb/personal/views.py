@@ -25,6 +25,7 @@ class Default:
                 try:
                     # send_mail(subject, message, settings.EMAIL_HOST_USER, [address])
                     send_mail(subject, message, address, [settings.EMAIL_HOST_USER]) # note: django uses the set email backend as user does not give auth details
+                    send_mail("Email received", "Your feedback was received and will be acted upon within 48hrs. Thankyou for your feedback.", settings.EMAIL_HOST_USER, [address])  # send confirmation email back
                     context['result'] = 'Email sent successfully'
                 except Exception as e:
                     context['result'] = f'Error sending email:=> {e}'
