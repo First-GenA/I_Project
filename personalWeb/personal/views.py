@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .models import BankInfo, Transactions, UserInfo
 from .forms import Profile
+import lichess.api
 
 # Create your views here.
 class Default:
@@ -16,24 +17,56 @@ class Default:
         '''
         context = {}
         if request.method == 'POST':
-            address = request.POST.get('email')
-            subject = request.POST.get('name')
-            message = request.POST.get('message')
-            print(f'address:=>{address} subject:=>{subject} message:=>{message}')
-            # validate user input
-            if address and subject and message:
-                try:
-                    # send_mail(subject, message, settings.EMAIL_HOST_USER, [address])
-                    send_mail(subject, message, address, [settings.EMAIL_HOST_USER]) # note: django uses the set email backend as user does not give auth details
-                    send_mail("Email received", "Your feedback was received and will be acted upon within 48hrs. Thankyou for your feedback.", settings.EMAIL_HOST_USER, [address])  # send confirmation email back
-                    context['result'] = 'Email sent successfully'
-                except Exception as e:
-                    context['result'] = f'Error sending email:=> {e}'
+            if 0 == 0:
+                address = request.POST.get('email')
+                subject = request.POST.get('usename')
+                message = request.POST.get('message')
+                print(f'address:=>{address} subject:=>{subject} message:=>{message} name:=>{request.POST.get('name')}')
+                # validate user input
+                if address and subject and message:
+                    try:
+                        # send_mail(subject, message, settings.EMAIL_HOST_USER, [address])
+                        send_mail(subject, message, address, [settings.EMAIL_HOST_USER]) # note: django uses the set email backend as user does not give auth details
+                        send_mail("Email received", "Your feedback was received and will be acted upon within 48hrs. Thankyou for your feedback.", settings.EMAIL_HOST_USER, [address])
+                        context['result'] = 'Email sent successfully'
+                    except Exception as e:
+                        context['result'] = f'Error sending email:=> {e}'
+                else:
+                    context['result'] = 'All fields are required'
             else:
-                context['result'] = 'All fields are required'
+                print('form not recognised')
 
         return render(request, 'index.html', context)
+    
+    def lichess(request):
+        """
+        Run the lichessScraper.py script
+        """
+        try:
+            context = {}
+            result= {}
 
+            if request.method == 'POST':
+                username = request.POST.get('username')
+                try:
+                    result = LichessScraper.fetch_recent_games(username)
+                except Exception as e:
+                    print(f'Error lichess:=>{e}')
+                
+                context.update({'item': result})
+                context.update({'username': username})
+
+            return render(request, 'commercial/scraper.html', context)
+        except Exception as e:
+            messages.error(request, "Error starting application.")
+            print(f"Error starting application:=> {e}")
+            return redirect('/')
+
+
+class Commerce:
+    def default(request):
+        return render(request, 'commercial/commerce.html', {})
+    
 
 def deposit_withdrawal(request):
     '''
@@ -304,4 +337,25 @@ class Finance:
         Plots a graph of the users spending habits
         '''
         return render(request, 'Finances/finances.html')
-        
+
+class LichessScraper:
+    '''
+    Scrapes Lichess.org for user data and information
+    '''
+    def __init__(self) -> None:
+        # Steps:-
+        # generate form, get username
+        # get username game history from lichess
+        # return data as dictionary
+        pass
+
+    def fetch_recent_games(username):
+        '''
+        get the user's most recent games from lichess
+        '''
+        try:
+           games = lichess.api.user_games(username, max=20)
+           return games
+        except Exception as e:
+            print(f"Error fetching games:=> {e}")
+            return []

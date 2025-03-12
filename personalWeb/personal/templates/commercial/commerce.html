@@ -10,16 +10,93 @@
 		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
 	</head>
 
-	<body>
-		<div class="wrapper">
-			<p> welcome to commerce </p>
+	<body class="is-preload">
+		<section id="sidebar">
+			<div class="inner">
+				<nav>
+					<ul>
+						<li><a href="#intro">Welcome</a></li>
+						<li><a href="{% url 'index' %}">Sale Items</a></li>
+						{% if user.is_authenticated %}
+							<li><a href="{% url 'finances' %}">Finances</a></li>
+							<li><a href="{% url 'profile' %}">Profile</a></li>
+							<li><a href="{% url 'logout' %}">{{ user.username }}::SignOut</a></li>
+						{% else %}
+							<li><a href="{% url 'login' %}">Login</a></li>
+						{% endif %}
+					</ul>
+				</nav>
+			</div>
+		</section>
+
+		<div id="wrapper">
+			<div class="inner">
+				<div>
+					<h2>You have bought this item. Here is the decription </h2>
+				</div>
+				<div class="split style1">
+					<section>
+								<span>
+									<p>There is image bought here</p>
+									<img src="{% static 'images/pic01.jpg' %}" alt="item">
+									<p>Text below here as well</p>
+								</span>
+					</section>
+
+					<section>
+						<form method="post" action="#">
+							{% csrf_token %}
+							<div class="field">
+								<label for="itemName">Item name</label>
+								<input type="text" value="Item name">
+							</div>
+							<div class="field">
+								<label for="itemPrice">Item price</label>
+								<input type="text" value="Item price">
+							</div>
+							<div class="field">
+								<label for="itemQuantity">Item quantity</label>
+								<input type="number" value="1">
+							</div>
+							<div class="field">
+								<label for="itemTotal">Item total</label>
+							</div>
+							
+							<ul class="actions">
+								<li>
+									<input class="button" type="button" value="Finalize">
+								</li>
+							</ul>
+					</section>
+				</div>
+
+				<div class="wrapper style1">
+					<span>
+						<p>
+							Other similar products
+						</p>
+					</span>
+				</div>
+			</div>
 		</div>
+
+		<!-- Footer -->
+		<footer id="footer" class="wrapper style1-alt">
+			<div class="inner">
+				<ul class="menu">
+					<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="#">Andrew</a></li>
+				</ul>
+			</div>
+		</footer>
 
 		<!--Scripts-->
 		<script src="{% static 'assets/js/jquery.min.js' %}"></script>
-		<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>							<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>							<script src="{% static 'assets/js/browser.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'assets/js/browser.min.js' %}"></script>
 		<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
-		<script src="{% static 'assets/js/util.js' %}"></script>								<script src="{% static 'assets/js/main.js' %}"></script>
+		<script src="{% static 'assets/js/util.js' %}"></script>
+		<script src="{% static 'assets/js/main.js' %}"></script>
 	</body>
 
 </html>

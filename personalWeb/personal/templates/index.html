@@ -26,6 +26,7 @@
 							<li><a href="#three">Get in touch</a></li>
 							{% if user.is_authenticated %}
 								<li><a href="{% url 'finances' %}">Finances</a></li>
+								<li><a href="{% url 'chess' %}">Chess</a></li>
 								<li><a href="{% url 'profile' %}">Profile</a></li>
 								<li><a href="{% url 'logout' %}">{{ user.username }}::SignOut</a></li>
 							{% else %}
@@ -56,18 +57,21 @@
 						<h1><center>Some of our products</center></h1>
 						<section>
 							<div class="inner">
-								<img src="{% static 'images/images.jpg' %}" alt="" data-position="50% 50%" />
-								<div class="split style1">
-									<section style="margin-left: 3em;">
-										<h2>Dell Desktop Computer</h2>
-										<p>RGB lights, 1Tb hdd storage, 4gb RAM, RTX-4090</p>
-									</section>
-									<section>
-										<ul class="actions">
-											<li><a href="#two" class="button">Learn more</a></li>
-										</ul>
-									</section>
-								</div>
+								<form name="images">
+									{% csrf_token %}
+									<img src="{% static 'images/images.jpg' %}" alt="" data-position="50% 50%" />
+									<div class="split style1">
+										<section style="margin-left: 3em;">
+											<h2>Dell Desktop Computer</h2>
+											<p>RGB lights, 1Tb hdd storage, 4gb RAM, RTX-4090</p>
+										</section>
+										<section>
+											<ul class="actions">
+												<li><a href="{% url 'commerce' %}" class="button" name="images">Learn more</a></li>
+											</ul>
+										</section>
+									</div>
+								</form>
 							</div>
 						</section>
 						
@@ -81,7 +85,7 @@
 									</section>
 									<section>
 										<ul class="actions">
-											<li><a href="#two" class="button">Learn more</a></li>
+											<li><a href="{% url 'commerce' %}" class="button">Learn more</a></li>
 										</ul>
 									</section>
 								</div>
@@ -140,12 +144,13 @@
 									<span>
 										<h4>{{ result }}</h4>
 									</span>
+
 									<form method="POST" action="#">
 										{% csrf_token %}
 										<div class="fields">
 											<div class="field half">
-												<label for="name">Name</label>
-												<input type="text" name="name" id="name" />
+												<label for="usename">Name</label>
+												<input type="text" name="usename" id="usename" />
 											</div>
 											<div class="field half">
 												<label for="email">Email</label>
@@ -159,7 +164,7 @@
 
 										<ul class="actions">
 											<li>
-												<input class="button submit" type="submit" value="Send Message">
+												<button class="button submit" name="feedback" type="submit">Send Message</button>
 											</li>
 										</ul>
 									</form>
@@ -168,14 +173,13 @@
 									<ul class="contact">
 										<li>
 											<h3>Address</h3>
-											<span>
-												20313-88 Rurii<br />
-											</span>
+											<span>12345 Somewhere Road #654<br />
+											Nashville, TN 00000-0000<br />
+											USA</span>
 										</li>
 										<li>
 											<h3>Email</h3>
 											<a href="#">andrewthuo10000@gmail.com</a>
-											<a href="https://www.gmail.com" target="_blank">andy.nlarry@gmail.com</a>
 										</li>
 										<li>
 											<h3>Phone</h3>

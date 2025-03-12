@@ -15,5 +15,8 @@ urlpatterns = [
     path('finances/', views.Finance.finances, name='finances'),
     path('transact/', views.deposit_withdrawal, name='depo'),
     path('bank registration/', views.Finance.bank_registration, name='bank_reg'),
-    path('history/', views.Finance.history, name='history'), 
+    path('history/', views.Finance.history, name='history'),
+    path('Buy/', views.Commerce.default, name='commerce'),
+    # chess paths
+    path('lichess/', views.Default.lichess, name='chess'),
 ]
