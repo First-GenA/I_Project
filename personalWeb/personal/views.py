@@ -23,7 +23,7 @@ class Default:
                 address = request.POST.get('email')
                 subject = request.POST.get('usename')
                 message = request.POST.get('message')
-                print(f'address:=>{address} subject:=>{subject} message:=>{message} name:=>{request.POST.get('name')}')
+                print(f"address:=>{address} subject:=>{subject} message:=>{message} name:=>{request.POST.get('name')}")
                 # validate user input
                 if address and subject and message:
                     try:
