@@ -7,6 +7,8 @@ from django.conf import settings
 from .models import BankInfo, Transactions, UserInfo
 from .forms import Profile
 import lichess.api
+import tkinter as tk
+from tkinter import ttk
 
 # Create your views here.
 class Default:
@@ -21,7 +23,7 @@ class Default:
                 address = request.POST.get('email')
                 subject = request.POST.get('usename')
                 message = request.POST.get('message')
-                print(f'address:=>{address} subject:=>{subject} message:=>{message} name:=>{request.POST.get("name")}')
+                print(f'address:=>{address} subject:=>{subject} message:=>{message} name:=>{request.POST.get('name')}')
                 # validate user input
                 if address and subject and message:
                     try:
@@ -39,9 +41,6 @@ class Default:
         return render(request, 'index.html', context)
     
     def lichess(request):
-        """
-        Run the lichessScraper.py script
-        """
         try:
             context = {}
             result= {}

@@ -32,7 +32,7 @@
         <u>{{ username }} :: past 20 games</u><br>
         {% if item %}
             {% for data in item %}
-                {{ data }}<br>
+                {{ data.user }}<br>
                 --------------<br>
             {% endfor %}
         {% else %}
