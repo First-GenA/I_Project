@@ -7,7 +7,6 @@ from django.conf import settings
 from .models import BankInfo, Transactions, UserInfo
 from .forms import Profile
 import lichess.api
-from tkinter import ttk
 
 # Create your views here.
 class Default:
