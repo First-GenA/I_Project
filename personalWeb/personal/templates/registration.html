@@ -24,22 +24,24 @@
                                 {% csrf_token %}
                                 <!--Error message(s)-->
                                 <span class="">
-                                    {% for message in messages %}
-                                        <h3>{{ message }}</h3>
-                                    {% endfor %}
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <h3>{{ message }}</h3>
+                                        {% endfor %}
+                                    {% endif %}
                                 </span>
                                 <!--Fields-->
                                 <div class="fields">
                                     <div class="field half">
-                                        <label for="username">Username</label>
+                                        <label>Username</label>
                                         <input type="text" name="username" required>
                                     </div>
                                     <div class="field half">
-                                        <label for="password">Password</label>
+                                        <label>Password</label>
                                         <input type="password" name="password" required>
                                     </div>
                                     <div class="field half">
-                                        <label for="email">Email</label>
+                                        <label>Email</label>
                                         <input type="email" name="email" required>
                                     </div>
                                 </div>
@@ -76,7 +78,8 @@
         <!--Scripts-->
         <script src="{% static 'assets/js/jquery.min.js' %}"></script>
 	    <script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
-		<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>			<script src="{% static 'assets/js/browser.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+        <script src="{% static 'assets/js/browser.min.js' %}"></script>
 		<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
 		<script src="{% static 'assets/js/util.js' %}"></script>
 		<script src="{% static 'assets/js/main.js' %}"></script>
