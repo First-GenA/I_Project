@@ -18,7 +18,7 @@ class UserInfo(models.Model):
     '''
     Profile information for the user
     '''
-    u_name = models.CharField(max_length=20, blank=True, null=True)  # default set to username util changed
+    u_name = models.CharField(max_length=20, blank=True, null=True)  # default set to login username util changed
     u_address = models.CharField(max_length=200, blank=True, null=True)
     u_phone = models.CharField(default=00-0000-0000, blank=True, null=True)
     u_avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
@@ -51,3 +51,13 @@ class Transactions(models.Model):
 
     def __str__(self) -> str:
         return self.t_owner.u_name
+
+class Items(models.Model):
+    '''
+    Records items
+    '''
+    i_name = models.CharField(max_length=30, null=False)
+    i_description = models.TextField(null=False)
+    i_price = models.FloatField(default=0.0)
+    i_total_quantity = models.IntegerField()
+    # i_owner = models.ForeignKey()
