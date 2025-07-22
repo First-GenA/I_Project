@@ -18,12 +18,9 @@ urlpatterns = [
     path('history/', views.Finance.history, name='history'),
     path('Buy/', views.Commerce.default, name='commerce'),
     # chess paths
-<<<<<<< HEAD
     path('Chess/', views.Default.lichess, name='chess'),
     # betting paths
     path('Gambling/', views.Gambling.as_view(), name='bet'),
     path('Slips/', views.Gambling.as_view(), name='slips'),
-=======
     path('lichess/', views.Default.lichess, name='chess'),
->>>>>>> 97e92ee8075d69ff70ccadfb195608c94e134cf8
 ]

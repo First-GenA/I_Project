@@ -5,13 +5,15 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
-<<<<<<< HEAD
 from django.views import View
 from django.urls import resolve
 from .models import BankInfo, Transactions, UserInfo
 from .forms import Profile
 import lichess.api
 from lichess.format import JSON
+from .models import BankInfo, Transactions, UserInfo
+from .forms import Profile
+import lichess.api
 
 
 # Create your views here.
@@ -22,37 +24,20 @@ class Default:
         This is the default home function.
         Leads to the home/index page
         """
-=======
-from .models import BankInfo, Transactions, UserInfo
-from .forms import Profile
-import lichess.api
-
-# Create your views here.
-class Default:
-    def home(request):
-        '''
-        This is the default home function.
-        Leads to the home/index page
-        '''
->>>>>>> 97e92ee8075d69ff70ccadfb195608c94e134cf8
         context = {}
         if request.method == 'POST':
             if 0 == 0:
                 address = request.POST.get('email')
-<<<<<<< HEAD
                 subject = request.POST.get('username')
                 message = request.POST.get('message')
                 print(f'address:=>{address} subject:=>{subject} message:=>{message} name:=>{request.POST.get("name")}')
-=======
                 subject = request.POST.get('usename')
                 message = request.POST.get('message')
                 print(f"address:=>{address} subject:=>{subject} message:=>{message} name:=>{request.POST.get('name')}")
->>>>>>> 97e92ee8075d69ff70ccadfb195608c94e134cf8
                 # validate user input
                 if address and subject and message:
                     try:
                         # send_mail(subject, message, settings.EMAIL_HOST_USER, [address])
-<<<<<<< HEAD
                         send_mail(subject, message, address, [
                             settings.EMAIL_HOST_USER])  # note: django uses the set email backend as user does not
                         # give auth details
@@ -60,16 +45,17 @@ class Default:
                                   "Your feedback was received and will be acted upon within 48hrs. Thankyou for your "
                                   "feedback.",
                                   settings.EMAIL_HOST_USER, [address])
-=======
-                        send_mail(subject, message, address, [settings.EMAIL_HOST_USER]) # note: django uses the set email backend as user does not give auth details
-                        send_mail("Email received", "Your feedback was received and will be acted upon within 48hrs. Thankyou for your feedback.", settings.EMAIL_HOST_USER, [address])
->>>>>>> 97e92ee8075d69ff70ccadfb195608c94e134cf8
+                        send_mail(subject, message, address, [
+                            settings.EMAIL_HOST_USER])
+                        # note: django uses the set email backend as user does not give auth details
+                        send_mail(
+                            "Email received", "Your feedback was received and will be acted upon within 48hrs."
+                                              " Thankyou for your feedback.", settings.EMAIL_HOST_USER, [address])
                         context['result'] = 'Email sent successfully'
                     except Exception as e:
                         context['result'] = f'Error sending email:=> {e}'
                 else:
                     context['result'] = 'All fields are required'
-<<<<<<< HEAD
 
         return render(request, 'index.html', context)
 
@@ -89,51 +75,21 @@ class Default:
                 except Exception as e:
                     print(f'Error lichess:=>{e}')
 
-                context.update({'username': username,
-                                'format': format})
-
-            return render(request, 'commercial/scraper.html', {'context': context,
-                                                               'results': result, })
-=======
+                context.update({'username': username, 'format': format})
+                return render(request, 'commercial/scraper.html', {'context': context,
+                                                                   'results': result, })
             else:
-                print('form not recognised')
-
-        return render(request, 'index.html', context)
-    
-    def lichess(request):
-        try:
-            context = {}
-            result= {}
-
-            if request.method == 'POST':
-                username = request.POST.get('username')
-                try:
-                    result = LichessScraper.fetch_recent_games(username)
-                except Exception as e:
-                    print(f'Error lichess:=>{e}')
-                
-                context.update({'item': result})
-                context.update({'username': username})
-
-            return render(request, 'commercial/scraper.html', context)
->>>>>>> 97e92ee8075d69ff70ccadfb195608c94e134cf8
+                return render(request, 'commercial/scraper.html', {})
         except Exception as e:
-            messages.error(request, "Error starting application.")
-            print(f"Error starting application:=> {e}")
-            return redirect('/')
+            print(f"Error:=> {e}")
+        return render(request, 'index.html', {})
 
 
 class Commerce:
-<<<<<<< HEAD
     @staticmethod
     def default(request):
         return render(request, 'commercial/commerce.html', {})
 
-=======
-    def default(request):
-        return render(request, 'commercial/commerce.html', {})
-    
->>>>>>> 97e92ee8075d69ff70ccadfb195608c94e134cf8
 
 def deposit_withdrawal(request):
     """
@@ -424,7 +380,6 @@ class Finance:
         """
         return render(request, 'Finances/finances.html')
 
-<<<<<<< HEAD
 
 class LichessScraper:
     """
@@ -488,26 +443,3 @@ class Gambling(View):
             case _:  # default case
                 print(f'Enter a valid value {selection}')
         return render(request, 'commercial/betslips.html', context=context)
-=======
-class LichessScraper:
-    '''
-    Scrapes Lichess.org for user data and information
-    '''
-    def __init__(self) -> None:
-        # Steps:-
-        # generate form, get username
-        # get username game history from lichess
-        # return data as dictionary
-        pass
-
-    def fetch_recent_games(username):
-        '''
-        get the user's most recent games from lichess
-        '''
-        try:
-           games = lichess.api.user_games(username, max=20)
-           return games
-        except Exception as e:
-            print(f"Error fetching games:=> {e}")
-            return []
->>>>>>> 97e92ee8075d69ff70ccadfb195608c94e134cf8

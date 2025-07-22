@@ -30,10 +30,7 @@
 							{% if user.is_authenticated %}
 								<li><a href="{% url 'finances' %}">Finances</a></li>
 								<li><a href="{% url 'chess' %}">Chess</a></li>
-<<<<<<< HEAD
 								<li><a href="{% url 'bet' %}">Betting</a></li>
-=======
->>>>>>> 97e92ee8075d69ff70ccadfb195608c94e134cf8
 								<li><a href="{% url 'profile' %}">Profile</a></li>
 								<li><a href="{% url 'logout' %}">{{ user.username }}::SignOut</a></li>
 							{% else %}

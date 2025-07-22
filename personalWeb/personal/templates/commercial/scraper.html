@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 {% load static %}
 <html>
@@ -43,53 +42,9 @@
             {% for data in results %}
                 {{ data.players }}<br/>
             {% endfor %}
-            <p>User games</p>
+            <p>End of User Games</p>
         {% else %}
             <p>check your username</p>
         {% endif %}</span>
     </body>
 </html>
-=======
-<!DOCTYPE html>
-{% load static %}
-<html>
-    <head>
-        <title>Chess</title>
-        <meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="icon" href="{% static 'images/chess.png' %}" type="image/x-icon"/>
-		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
-		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
-    </head>
-
-    <body>
-        {% if messages %}
-            {{ messages }}
-        {% endif %}
-        <!--<iframe src="#" name="iframe_a" height="800px" width="100%" title="chess stats"></iframe>-->
-        <form method="post">
-            {% csrf_token %}
-            <div class="field">
-                <label for="username">Enter chess username</label>
-                <input type="text" name="username">
-            </div>
-            <ul class="actions">
-                <li>
-                    <input class="button submit" type="submit" value="Get Game History" >
-                </li>
-            </ul>
-        </form>
-
-        <span>
-        <u>{{ username }} :: past 20 games</u><br>
-        {% if item %}
-            {% for data in item %}
-                {{ data }}<br>
-                --------------<br>
-            {% endfor %}
-        {% else %}
-            <p>check your username</p>
-        {% endif %}</span>
-    </body>
-</html>
->>>>>>> 97e92ee8075d69ff70ccadfb195608c94e134cf8
