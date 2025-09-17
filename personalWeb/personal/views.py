@@ -235,7 +235,11 @@ class UserInformation:
             else:
                 # display the available user details
                 form = Profile(instance=user_info)
-                image = UserInfo.objects.get(user=user)
+                try:
+                    image = UserInfo.objects.get(user=user)
+                except Exception as e:
+                    print(f'Image retrieval error:=> {e}')
+                    image = None
                 return render(request, 'profile.html', {'form': form, 'image': image})
         else:
             messages.error(request, 'You are not logged in')
