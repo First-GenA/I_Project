@@ -4,7 +4,7 @@ services:
     name: personalWeb
     runtime: python
     buildCommand: "./build.sh"
-    startCommand: "gunicorn personalWeb.wsgi:application --bind:${PORT}"
+    startCommand: "python -m gunicorn personalWeb.wsgi:application --pythonpath personalWeb"
     envVars:
       - key: DATABASE_URL
         fromDatabase:
