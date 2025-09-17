@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<!--
+	Load static files
+-->
+{% load static %}
+<html>
+	<head>
+		<title>Finances</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+		<link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
+	</head>
+
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="{% url 'index' %}" class="title">AndyTech</a>
+                    <nav>
+                        <ul>
+                            <li><a href="{% url 'index' %}">Home</a></li>
+							<li><a href="{% url 'profile' %}">Profile</a></li>
+							<li><a href="{% url 'bank_reg' %}">Bank Registration</a></li>
+                            <li><a href="{% url 'depo' %}">Deposit/Withdrawal</a></li>
+                        </ul>
+                    </nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+                <section id="main" class="wrapper style1 fade-up">
+					<div class="inner">
+						<h1 class="major">Manage Your Finances</h1>
+						<!--Message notification window-->
+                        {% for message in messages %}
+                            <span>
+                                <script type="text/javascript">
+                                    alert('{{ message }}')
+                                </script>
+                            </span>
+                        {% endfor %}
+
+						<div class="split style1">
+							<section>
+								<div class="fields">
+									<h2><u>User Information</u></h2>
+									<div class="field half">
+										<span>
+											<h7>Email: {{ user.email }}</h7><br>
+											{% for item in balance %}
+												<h7>{{ item.b_name }} => Ksh {{ item.b_balance|floatformat:2 }}</h7><br/>
+											{% endfor %}
+										</span>
+									</div>
+								</div>
+							</section>
+
+							<section>
+								<div class="fields">
+									<h3><u>Transaction Information</u></h3>
+									<div class="field half">
+										<span>
+											{% if finances %}
+												{% for finance in finances|slice:":5" %}
+													<h7><!--transaction type: -->{{ finance.t_type }},</h7>
+													<h7><!--transaction bank: -->{{ finance.t_bank }},</h7>
+													<h7><!--transaction amount: -->{{ finance.t_amount|floatformat:2 }},</h7>
+													<h7><!--transaction time: -->{{ finance.t_creation }}</h7>
+													<h3>--------------------------------------------------</h3><br>
+												{% endfor %}
+											{% else %}
+												<h7>No data to display</h7>
+											{% endif %}
+										</span>
+									</div>
+								</div>
+							</section>
+						</div>
+					</div>
+				</section>
+			</div>
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
+
+	</body>
+</html>

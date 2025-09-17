@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<!--
+	Load static files
+-->
+{% load static %}
+<html>
+	<head>
+		<title>Registration</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+		<link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
+	</head>
+
+    <body class="is-preload">
+        <div id="wrapper">
+            <h1>Registration</h1>
+            <section id="intro" class="wrapper style1 fullscreen fade-up">
+                <div class="inner">
+                    <div class="split style1">
+                        <section>
+                            <form action="#" method="POST">
+                                {% csrf_token %}
+                                <!--Error message(s)-->
+                                <span class="">
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <h3>{{ message }}</h3>
+                                        {% endfor %}
+                                    {% endif %}
+                                </span>
+                                <!--Fields-->
+                                <div class="fields">
+                                    <div class="field half">
+                                        <label>Username</label>
+                                        <input type="text" name="username" required>
+                                    </div>
+                                    <div class="field half">
+                                        <label>Password</label>
+                                        <input type="password" name="password" required>
+                                    </div>
+                                    <div class="field half">
+                                        <label>Email</label>
+                                        <input type="email" name="email" required>
+                                    </div>
+                                </div>
+                                <ul class="actions">
+                                    <li><input class="button submit" value="Register"></li>
+                                </ul>
+                            </form>
+                        </section>
+                        <section>
+                            <ul class="contact">
+                                <li>
+                                    <h3>Post an ad here</h3>
+                                    <span>
+                                        Some more information on the ad<br>
+                                        This is the best
+                                    </span>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!--Footer-->
+        <footer id="footer" class="wrapper style1-alt">
+            <div class="inner">
+                <ul class="menu">
+                    <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="#">Andrew</a></li>
+                </ul>
+            </div>
+        </footer>
+
+        <!--Scripts-->
+        <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+	    <script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+        <script src="{% static 'assets/js/browser.min.js' %}"></script>
+		<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+		<script src="{% static 'assets/js/util.js' %}"></script>
+		<script src="{% static 'assets/js/main.js' %}"></script>
+    
+    </body>
+</html>
+    

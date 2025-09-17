@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Chess</title>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="icon" href="{% static 'images/chess.png' %}" type="image/x-icon"/>
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
+    </head>
+
+    <body>
+        <!--<iframe src="#" name="iframe_a" height="800px" width="100%" title="chess stats"></iframe>-->
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label for="username">Enter chess username</label>
+                <input type="text" name="username">
+            </div>
+            <div class="field">
+                <input type="radio" id="classical" name="gameType" value="classical" checked>
+                <label for="classical"><h4>classical</h4></label>
+                <input type="radio" id="rapid" name="gameType" value="rapid">
+                <label for="rapid"><h4>rapid</h4></label>
+                <input type="radio" id="blitz" name="gameType" value="blitz">
+                <label for="blitz"><h4>blitz</h4></label>
+                <input type="radio" id="bullet" name="gameType" value="bullet">
+                <label for="bullet"><h4>bullet</h4></label>
+            </div>
+            <ul class="actions">
+                <li>
+                    <input class="button submit" type="submit" value="Get Game History" >
+                </li>
+            </ul>
+        </form>
+
+        <span>
+        <u>{{ context.username }} :: past 20 games :: {{ context.format }}</u><br/>
+        {% if results %}
+            <p>User information</p>
+            {% for data in results %}
+                {{ data.players }}<br/>
+            {% endfor %}
+            <p>End of User Games</p>
+        {% else %}
+            <p>check your username</p>
+        {% endif %}</span>
+    </body>
+</html>

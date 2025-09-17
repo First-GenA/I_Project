@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+	<head>
+		<title>Hyperfinance</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+		<link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"/>
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
+	</head>
+<body class="is-preload">
+
+		<!-- Sidebar -->
+			<section id="sidebar">
+				<div class="inner">
+					<nav>
+						<ul>
+							<li><a href="#intro">Welcome</a></li>
+							<li><a href="#one">Sale Items</a></li>
+							<li><a href="#two">What we do</a></li>
+							<li><a href="#three">Get in touch</a></li>
+							{% if user.is_authenticated %}
+								<li><a href="{% url 'finances' %}">Finances</a></li>
+								<li><a href="{% url 'chess' %}">Chess</a></li>
+								<li><a href="{% url 'profile' %}">Profile</a></li>
+								<li><a href="{% url 'logout' %}">{{ user.username }}::SignOut</a></li>
+							{% else %}
+								<li><a href="{% url 'login' %}">Login</a></li>
+							{% endif %}
+						</ul>
+					</nav>
+				</div>
+			</section>
+
+
+		<div id="wrapper">
+
+			<section id="intro" class="wrapper style1 fullscreen fade-up">
+						<div class="inner">
+							<h1>Welcome to AndyTech</h1>
+							<p>Your one stop shop for your tech needs and services.</p>
+							<pre>
+
+								<h4>An error was encountered; please try again.</h4></pre>
+							<ul class="actions">
+								<li><a href="{% url 'registration' %}" class="button scrolly">Register</a></li>
+							</ul>
+						</div>
+					</section>
+		</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper style1-alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="#">Andrew</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+</html>

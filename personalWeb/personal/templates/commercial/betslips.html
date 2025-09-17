@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% extends "index.html" %}
+<html lang="en">
+    {% block body %}
+        <body class="is-preload">
+            <div id="wrapper">
+                <section class="wrapper style1 fade-up">
+                    <h1>BET-SLIP</h1>
+                    <div>
+                        <!--get content info from the clicked button/item i.e. bet odds and type-->
+                        <p>You picked :=> {{ selection }}</p>
+                    </div>
+                </section>
+            </div>
+
+            <div>
+                <section>
+                    <input type="button" value="Make Bet">
+                </section>
+            </div>
+        </body>
+    {% endblock %}
+</html>

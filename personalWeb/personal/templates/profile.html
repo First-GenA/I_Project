@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<!--
+	Load static files
+-->
+{% load static %}
+<html>
+	<head>
+		<title>User Profile</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+		<link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
+	</head>
+	
+	<body class="is-preload">
+        <header id="header">
+            <a href="{% url 'index' %}" class="title">AndyTech</a>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'profile' %}" class="active">Profile</a></li>
+                    <li><a href="{% url 'finances' %}">Finance</a></li>
+                    <li><a href="#">Elements</a></li>
+                </ul>
+            </nav>
+        </header>
+        {% for message in messages %}
+            <span>
+                <script type="text/javascript">
+                alert('{{ message }}')
+                </script>
+            </span>
+        {% endfor %}
+        <div id="wrapper">
+            <section id="intro" class="wrapper style2 fullscreen fade-up">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <span>
+                        <!--Set an avatar/profile-->
+                        {% if image %}
+                            <img src="{{ image.u_avatar.url }}" alt="avatar" style="object-fit: cover; object-position: top center; border-radius: 50%; width: 300px; height: 300px;"/><br>
+                            <i class="fas fa-edit">{{ form.u_avatar }}</i>
+                        {% else %}
+                            <img src="#" alt="avatar" style="object-fit: cover; object-position: top center; border-radius: 50%; width: 300px; height: 300px;"/><br>
+                            <i class="fas fa-edit">{{ form.u_avatar }}</i>
+                        {% endif %}
+                    </span>
+                    <p><h3>Username</h3>{{ form.u_name }}</p>
+                    <p><h3>Phone Number</h3>{{ form.u_phone }}</p>
+                    <p><h3>Address</h3>{{ form.u_address }}</p>
+
+                    <button type="submit">Update</button>
+                </form>
+            </section>
+        </div>
+        <!--Footer-->
+        <footer id="footer" class="wrapper style1-alt">
+            <div class="inner">
+                <ul class="menu">
+                    <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="#">Andrew</a></li>
+                </ul>
+            </div>
+        </footer>
+        <!--Scripts-->
+        <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+		<script src="{% static 'assets/js/browser.min.js' %}"></script>
+		<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+		<script src="{% static 'assets/js/util.js' %}"></script>
+		<script src="{% static 'assets/js/main.js' %}"></script>
+
+    </body>
+</html>

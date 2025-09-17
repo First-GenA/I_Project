@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<!--
+	Load static files
+-->
+{% load static %}
+<html>
+	{% block titles %}
+	<head>
+		<title>Hyperfinance</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+		<link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon"/>
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
+	</head>
+	{% endblock titles %}
+
+	{% block body %}
+	<body class="is-preload">
+
+		<!-- Sidebar -->
+			<section id="sidebar">
+				<div class="inner">
+					<nav>
+						<ul>
+							<li><a href="#intro">Welcome</a></li>
+							<li><a href="#one">Sale Items</a></li>
+							<li><a href="#two">What we do</a></li>
+							<li><a href="#three">Get in touch</a></li>
+							{% if user.is_authenticated %}
+								<li><a href="{% url 'finances' %}">Finances</a></li>
+								<li><a href="{% url 'chess' %}">Chess</a></li>
+								<li><a href="{% url 'bet' %}">Betting</a></li>
+								<li><a href="{% url 'profile' %}">Profile</a></li>
+								<li><a href="{% url 'logout' %}">{{ user.username }}::SignOut</a></li>
+							{% else %}
+								<li><a href="{% url 'login' %}">Login</a></li>
+							{% endif %}
+						</ul>
+					</nav>
+				</div>
+			</section>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Intro -->
+					<section id="intro" class="wrapper style1 fade-up">
+						<div class="inner">
+							<h1>Welcome to AndyTech</h1>
+							<p>Your one stop shop for your tech needs <a href="#">Andy</a><br />
+							and services.</p>
+							<ul class="actions">
+								<li><a href="#one" class="button scrolly">Learn more</a></li>
+							</ul>
+						</div>
+					</section>
+
+				<!-- One -->
+					<section id="one" class="wrapper style1 fade-up">
+						<h1><center>Some of our products</center></h1>
+						<section>
+							<div class="inner">
+								<form name="images">
+									{% csrf_token %}
+									<img src="{% static 'images/images.jpg' %}" alt="" data-position="50% 50%" />
+									<div class="split style1">
+										<section style="margin-left: 3em;">
+											<h2>Dell Desktop Computer</h2>
+											<p>RGB lights, 1Tb hdd storage, 4gb RAM, RTX-4090</p>
+										</section>
+										<section>
+											<ul class="actions">
+												<li><a href="{% url 'commerce' %}" class="button" name="images">Learn more</a></li>
+											</ul>
+										</section>
+									</div>
+								</form>
+							</div>
+						</section>
+						
+						<section>
+							<div class="inner">
+								<a href="#" class="image"><img src="{% static 'images/business.jpg' %}" alt="" data-position="25% 25%" /></a>
+								<div class="split style1">
+									<section style="margin-left: 3em;">
+										<h2>Let us do business</h2>
+										<p>We want to be the best; so we do the best!</p>
+									</section>
+									<section>
+										<ul class="actions">
+											<li><a href="{% url 'commerce' %}" class="button">Learn more</a></li>
+										</ul>
+									</section>
+								</div>
+							</div>
+						</section>
+					</section>
+
+				<!-- Two -->
+					<section id="two" class="wrapper style3 fade-up">
+						<div class="inner">
+							<h2>What we do</h2>
+							<div class="features">
+								<section>
+									<span class="icon solid major fa-code"></span>
+									<h3>Maintenance</h3>
+									<p>At AndyTech Solutions, we understand how essential your computer is for work, study, and entertainment.
+										That’s why we provide top-notch computer maintenance services to keep your devices running smoothly and efficiently.
+										Whether you're facing hardware issues, software glitches, or just need a system tune-up, we’ve got you covered!
+									</p>
+								</section>
+								<section>
+									<span class="icon solid major fa-lock"></span>
+									<h3>Programming</h3>
+									<p>
+										Whether you're looking for custom software development, web and mobile app creation, or coding assistance, our expert developers are here to help.
+										We turn ideas into reality with precision, efficiency, and innovation.
+									</p>
+								</section>
+								<section>
+									<span class="icon solid major fa-cog"></span>
+									<h3>Data Storage</h3>
+									<p>
+										We provide cutting-edge data storage solutions to keep your valuable information safe, accessible, and organized.
+										Whether you're a business looking for secure cloud storage or an individual in need of reliable backup solutions, we offer top-tier services designed to meet your needs.
+									</p>
+								</section>
+								<section>
+									<span class="icon solid major fa-link"></span>
+									<h3>Security</h3>
+									<p>
+										At AndyTech, we specialize in delivering top-tier security services to protect your digital assets, sensitive information, and critical infrastructure. 
+										Whether you're a business seeking comprehensive cybersecurity solutions or an individual looking to safeguard personal data, we provide advanced security strategies tailored to your needs.
+									</p>
+								</section>
+							</div>
+						</div>
+					</section>
+
+				<!-- Three -->
+					<section id="three" class="wrapper style1 fade-up">
+						<div class="inner">
+							<h2>Get in touch</h2>
+							<p>At AndyTech we beleive every opinion matters. Reach out!</p>
+							<div class="split style1">
+								<section>
+									<span>
+										<h4>{{ result }}</h4>
+									</span>
+
+									<form method="POST" action="#">
+										{% csrf_token %}
+										<div class="fields">
+											<div class="field half">
+												<label for="usename">Name</label>
+												<input type="text" name="usename" id="usename" />
+											</div>
+											<div class="field half">
+												<label for="email">Email</label>
+												<input type="text" name="email" id="email" />
+											</div>
+											<div class="field">
+												<label for="message">Message</label>
+												<textarea name="message" id="message" rows="5"></textarea>
+											</div>
+										</div>
+
+										<ul class="actions">
+											<li>
+												<button class="button submit" name="feedback" type="submit">Send Message</button>
+											</li>
+										</ul>
+									</form>
+								</section>
+								<section>
+									<ul class="contact">
+										<li>
+											<h3>Address</h3>
+											<span>12345 Somewhere Road #654<br />
+											Nashville, TN 00000-0000<br />
+											USA</span>
+										</li>
+										<li>
+											<h3>Email</h3>
+											<a href="#">andrewthuo10000@gmail.com</a>
+										</li>
+										<li>
+											<h3>Phone</h3>
+											<span>(+254) 7-622-139</span>
+										</li>
+										<li>
+											<h3>Social</h3>
+											<ul class="icons">
+												<li><a href="https://x.com/i/flow/login" class="icon brands fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+												<li><a href="https://www.facebook.com/login/" class="icon brands fa-facebook-f" target="_blank"><span class="label">Facebook</span></a></li>
+												<li><a href="https://github.com/login" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+												<li><a href="https://www.instagram.com/accounts/login/?hl=en" class="icon brands fa-instagram" target="_blank"><span class="label">Instagram</span></a></li>
+												<li><a href="https://ke.linkedin.com/" class="icon brands fa-linkedin-in" target="_blank"><span class="label">LinkedIn</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</section>
+							</div>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper style1-alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="#">Andrew</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+			<script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+			<script src="{% static 'assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
+
+	</body>
+	{% endblock body %}
+</html>
