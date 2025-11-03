@@ -39,9 +39,24 @@
         <u>{{ context.username }} :: past 20 games :: {{ context.format }}</u><br/>
         {% if results %}
             <p>User information</p>
-            {% for data in results %}
-                {{ data.players }}<br/>
-            {% endfor %}
+                {% for result in results %}
+                <!--This loop displays when it wants to, mostly returns nothing-->
+                <ul>
+                    <li>Result: {{ result.player }} </li>
+                    
+                    <li>Rated Game: {{ result.rated}} </li>
+                    <li>Variant: {{ result.variant}} </li>
+                    <li>Clock time: {{ result.clock}} </li>
+                    <li>Players:
+                        <ul>
+                            <li>White {{ result.players.white.user.name}} </li>
+                            <li>White Rating {{ result.players.white.rating}} </li>
+                            <li>Black {{ result.players.black.user.name}} </li>
+                            <li>Black Rating {{ result.players.black.rating}} </li>
+                        </ul>
+                    </li>
+                </ul>
+                {% endfor %}
             <p>End of User Games</p>
         {% else %}
             <p>check your username</p>

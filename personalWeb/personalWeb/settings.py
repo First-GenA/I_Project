@@ -149,10 +149,14 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Media files (uploaded by the user)
+from google.oauth2 import service_account
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    os.path.join(BASE_DIR, 'credentials.json')
+)
 
-MEDIA_URL = '/media/'
+"""MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+"""
 """STORAGES = {
     # ...
     "default": {
@@ -162,11 +166,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
         "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
     },
 }"""
-
-GS_CREDENTIALS = os.getenv('GS_CREDENTIALS')
 GS_PROJECT_ID = os.getenv('GS_PROJECT_ID')
-DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleMediaCloudStorage'
 GS_BUCKET_NAME = os.getenv('GS_BUCKET_NAME')
+MEDIA_ROOT = 'media/'
+UPLOAD_ROOT = 'media/uploads/'
+MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/'
+# Please rewrite the above to handle media files correctly with Google Cloud Storage.
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 

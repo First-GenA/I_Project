@@ -10,7 +10,8 @@ from django.urls import resolve
 from .models import BankInfo, Transactions, UserInfo
 from .forms import Profile
 import lichess.api
-from lichess.format import JSON
+from lichess.format import JSON, PGN
+import json
 from .models import BankInfo, Transactions, UserInfo
 from .forms import Profile
 import lichess.api
@@ -19,7 +20,7 @@ import lichess.api
 # Create your views here.
 class Default:
     @staticmethod
-    def home(request):
+    def home(request): # type: ignore
         """
         This is the default home function.
         Leads to the home/index page
@@ -70,14 +71,15 @@ class Default:
                 format = request.POST.get('gameType')
                 # test above values for correct entry
                 print(f'username:=> {username} format:=> {format}')
-                try:
+                results = LichessScraper.fetch_recent_games(username, format),
+                """try:
                     result = LichessScraper.fetch_recent_games(username, format)
                 except Exception as e:
-                    print(f'Error lichess:=>{e}')
+                    print(f'Error lichess:=>{e}')"""
 
                 context.update({'username': username, 'format': format})
                 return render(request, 'commercial/scraper.html', {'context': context,
-                                                                   'results': result, })
+                                                                   'results': results, })
             else:
                 return render(request, 'commercial/scraper.html', {})
         except Exception as e:
@@ -390,21 +392,23 @@ class LichessScraper:
     Scrapes Lichess.org for user data and information
     """
 
-    def __init__(self) -> None:
+    def __init__(self):
+        pass
         # Steps:-
         # generate form, get username
         #  game history from lichess
         # return data as dictionary
-        pass
 
-    @staticmethod
-    def fetch_recent_games(username, type):
+
+    def fetch_recent_games(username, format):
         """
         get the user's most recent games from lichess
         """
+        games = []
         try:
-            # user = lichess.api.user(username)
-            games = lichess.api.user_games(username, format=JSON, max=50, perfType=type)
+            raw_games_data = lichess.api.user_games(username, max=20, perftype=format, as_format=JSON)
+            for data in raw_games_data:
+                games.append(data)
             return games
         except Exception as e:
             print(f"Error fetching games:=> {e}")
