@@ -1,9 +1,10 @@
 from storages.utils import setting
 from urllib.parse import urljoin
-from personalWeb.personalWeb import settings
+from django.conf import settings
+from storages.backends.gcloud import GoogleCloudStorage
 
 
-class GoogleMediaCloudStorage('GoogleCloudStorage'): # type: ignore
+class GoogleMediaCloudStorage(GoogleCloudStorage):
     """Custom Google Cloud Storage backend for handling media files."""
 
     bucket_name = setting('GS_BUCKET_NAME')

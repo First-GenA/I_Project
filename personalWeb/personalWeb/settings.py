@@ -151,27 +151,32 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Media files (uploaded by the user)
 from google.oauth2 import service_account
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-    os.path.join(BASE_DIR, 'credentials.json')
-)
+    os.path.join(BASE_DIR, 'credentials.json'))
 
-"""MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-"""
-"""STORAGES = {
-    # ...
+GS_BUCKET_NAME = os.getenv('GS_BUCKET_NAME')
+GS_PROJECT_ID = os.getenv('GS_PROJECT_ID')
+STORAGES = {
     "default": {
         "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+        "OPTIONS": {
+            "bucket_name": GS_BUCKET_NAME,
+            "project_id": GS_PROJECT_ID,
+            "credentials": GS_CREDENTIALS,
+        },
     },
     "staticfiles": {
         "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+        "OPTIONS": {
+            "bucket_name": GS_BUCKET_NAME,
+            "project_id": GS_PROJECT_ID,
+            "location": "static",
+        },
     },
-}"""
-GS_PROJECT_ID = os.getenv('GS_PROJECT_ID')
-DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleMediaCloudStorage'
-GS_BUCKET_NAME = os.getenv('GS_BUCKET_NAME')
-MEDIA_ROOT = 'media/'
-UPLOAD_ROOT = 'media/uploads/'
-MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/'
+}
+# Urls to serve media files
+MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/media/'
+STATIC_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/static/'
+
 # Please rewrite the above to handle media files correctly with Google Cloud Storage.
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
